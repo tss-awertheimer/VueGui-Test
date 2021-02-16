@@ -7,6 +7,7 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+// import "../src/global.less";
 
 // Make BootstrapVue available throughout project
 Vue.use(BootstrapVue);

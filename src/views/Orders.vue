@@ -1,29 +1,27 @@
 <template>
   <div class="orders">
     <h1>This is an orders page</h1>
-    <ul v-if="starships && starships.length">
-      <li v-for="starship of starships" :key="`${starship}-${index}`">
-        <p>
-          <strong>{{ starship.name }}</strong>
-        </p>
-        <p>{{ starship.body }}</p>
-      </li>
-    </ul>
+
+    <Table :items="starships" :fields="fields" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Vue from "vue";
+import Table from "../components/Table";
 
 export default Vue.extend({
   name: "Orders",
-  components: {},
+  components: {
+    Table
+  },
 
   data() {
     return {
       starships: [],
-      errors: []
+      errors: [],
+      fields: ["name", "model", "manufacturer", "cost_in_credits"]
     };
   },
 
