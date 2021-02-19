@@ -2,7 +2,7 @@
   <div class="orders">
     <h1>This is an orders page</h1>
 
-    <Table :items="starships" :fields="fields" />
+    <Table :items="orders" :fields="fields" />
   </div>
 </template>
 
@@ -19,17 +19,20 @@ export default Vue.extend({
 
   data() {
     return {
-      starships: [],
+      orders: [],
       errors: [],
-      fields: ["name", "model", "manufacturer", "cost_in_credits"]
+      fields: [],
+      selectedOrder: ""
     };
   },
 
-  // Fetches starships when the component is created.
+  // Fetches orders when the component is created.
   async created() {
     try {
-      const response = await axios.get(`https://swapi.dev/api/starships`);
-      this.starships = response.data.results;
+      const response = await axios.get(
+        `http://zss-stage-web01.tss-dmz.com:91/netsuiteservice/api/WebOrders`
+      );
+      this.orders = response.data.items;
 
       console.log(response);
     } catch (e) {

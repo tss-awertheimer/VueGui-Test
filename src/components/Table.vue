@@ -6,16 +6,16 @@
       v-if="!isOpen"
       :items="this.items"
       :fields="this.fields"
-      @row-clicked="myRowClickedHandler()"
+      @row-clicked="item => myRowClickedHandler(item, item.id)"
     >
     </b-table>
 
-    <TableItem v-else :item="item" />
+    <TableItem :item="selectedItem" />
   </div>
 </template>
 
 <script>
-import TableItem from "./TableItem";
+import TableItem from "./TableItem.vue";
 
 export default {
   name: "Table",
@@ -24,16 +24,20 @@ export default {
   },
   props: ["items", "fields", "itemVal"],
   isOpen: false,
+  selectedItem: {},
 
   methods: {
-    myRowClickedHandler() {
+    myRowClickedHandler(item, id) {
       this.isOpen = true;
+      this.selectedItem = item;
+      this.$router.push({ path: `/order/${id}` });
     }
   },
 
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      selectedItem: {}
     };
   }
 };
