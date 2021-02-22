@@ -3,12 +3,18 @@
     <div class="ordersTable" v-if="!isOpen">
       <h1>Orders list page</h1>
 
-      <Table @clicked="onChildClick" :items="orders" :fields="fields" />
+      <Table @clicked="onChildClick" :items="orders" :fields="ordersFields" />
     </div>
 
     <div v-if="isOpen" class="order">
-      <h1>Individual Order Page</h1>
-      <h3>{{ order.id }}</h3>
+      <b-card
+        :title="order.id"
+        :sub-title="order.createdDate"
+        style="max-width: 20rem;"
+        class="mb-2"
+      >
+        <b-button href="#" variant="primary">Go somewhere</b-button>
+      </b-card>
     </div>
   </div>
 </template>
@@ -26,11 +32,10 @@ export default Vue.extend({
   data() {
     return {
       orders: [],
-      order: {
-        id: ""
-      },
+      order: {},
       errors: [],
-      fields: [],
+      ordersfields: [],
+      singleOrderFields: ["id", "createdDate"],
       isOpen: false
     };
   },
@@ -48,11 +53,19 @@ export default Vue.extend({
   },
 
   methods: {
-    onChildClick(orderId) {
+    async onChildClick(orderId) {
       this.isOpen = true;
-      // this.itemId = item.id;
-      // this.$router.push({ path: `/order/${item.id}` });
+      this.$router.push({ path: `/orders/${orderId}` });
       this.order.id = orderId;
+
+      try {
+        const response = await axios.get(
+          `http://zss-stage-web01.tss-dmz.com:91/netsuiteservice/api/WebOrders/${orderId}`
+        );
+        this.order = response.data;
+      } catch (e) {
+        this.errors.push(e);
+      }
     }
   }
 });
