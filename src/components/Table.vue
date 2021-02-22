@@ -3,41 +3,32 @@
     <b-table
       striped
       hover
-      v-if="!isOpen"
       :items="this.items"
       :fields="this.fields"
-      @row-clicked="item => myRowClickedHandler(item, item.id)"
+      @row-clicked="item => onClick(item.id)"
     >
     </b-table>
-
-    <TableItem :item="selectedItem" />
   </div>
 </template>
 
 <script>
-import TableItem from "./TableItem.vue";
-
 export default {
   name: "Table",
-  components: {
-    TableItem
-  },
+  components: {},
   props: ["items", "fields", "itemVal"],
   isOpen: false,
-  selectedItem: {},
+  itemId: {},
 
   methods: {
-    myRowClickedHandler(item, id) {
-      this.isOpen = true;
-      this.selectedItem = item;
-      this.$router.push({ path: `/order/${id}` });
+    onClick(id) {
+      this.$emit("clicked", id);
     }
   },
 
   data() {
     return {
       isOpen: false,
-      selectedItem: {}
+      itemId: {}
     };
   }
 };

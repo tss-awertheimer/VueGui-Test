@@ -1,8 +1,15 @@
 <template>
   <div class="orders">
-    <h1>This is an orders page</h1>
+    <div class="ordersTable" v-if="!isOpen">
+      <h1>Orders list page</h1>
 
-    <Table :items="orders" :fields="fields" />
+      <Table @clicked="onChildClick" :items="orders" :fields="fields" />
+    </div>
+
+    <div v-if="isOpen" class="order">
+      <h1>Individual Order Page</h1>
+      <h3>{{ order.id }}</h3>
+    </div>
   </div>
 </template>
 
@@ -16,13 +23,15 @@ export default Vue.extend({
   components: {
     Table
   },
-
   data() {
     return {
       orders: [],
+      order: {
+        id: ""
+      },
       errors: [],
       fields: [],
-      selectedOrder: ""
+      isOpen: false
     };
   },
 
@@ -33,10 +42,17 @@ export default Vue.extend({
         `http://zss-stage-web01.tss-dmz.com:91/netsuiteservice/api/WebOrders`
       );
       this.orders = response.data.items;
-
-      console.log(response);
     } catch (e) {
       this.errors.push(e);
+    }
+  },
+
+  methods: {
+    onChildClick(orderId) {
+      this.isOpen = true;
+      // this.itemId = item.id;
+      // this.$router.push({ path: `/order/${item.id}` });
+      this.order.id = orderId;
     }
   }
 });
