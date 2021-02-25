@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import Orders from "../views/Orders.vue";
+import SingleOrder from "../components/SingleOrder.vue";
 
 Vue.use(VueRouter);
 
@@ -13,17 +15,15 @@ const routes: Array<RouteConfig> = [
   {
     path: "/orders",
     name: "Orders",
-    // route level code-splitting
-    // this generates a separate chunk (orders.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "orders" */ "../views/Orders.vue")
-  },
-  {
-    path: "/order/:id",
-    name: "Order",
-    component: () =>
-      import(/* webpackChunkName: "orders" */ "../components/TableItem.vue")
+    component: Orders,
+    children: [
+      {
+        path: "/orders/:id",
+        name: "SingleOrder",
+        component: SingleOrder,
+        props: true
+      }
+    ]
   }
 ];
 

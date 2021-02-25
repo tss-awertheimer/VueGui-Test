@@ -17,14 +17,11 @@ export default {
   components: {},
   props: ["items", "fields", "itemVal"],
   isOpen: false,
-  itemId: {},
-
   methods: {
     onClick(id) {
       this.$emit("clicked", id);
     }
   },
-
   data() {
     return {
       isOpen: false,

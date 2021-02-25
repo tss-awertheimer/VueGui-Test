@@ -3,18 +3,11 @@
     <div class="ordersTable" v-if="!isOpen">
       <h1>Orders list page</h1>
 
-      <Table @clicked="onChildClick" :items="orders" :fields="ordersFields" />
+      <Table @clicked="onChildClick" :items="orders" :fields="fields" />
     </div>
 
-    <div v-if="isOpen" class="order">
-      <b-card
-        :title="order.id"
-        :sub-title="order.createdDate"
-        style="max-width: 20rem;"
-        class="mb-2"
-      >
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
+    <div v-if="isOpen">
+      <router-view id="order.id"></router-view>
     </div>
   </div>
 </template>
@@ -23,7 +16,6 @@
 import axios from "axios";
 import Vue from "vue";
 import Table from "../components/Table";
-
 export default Vue.extend({
   name: "Orders",
   components: {
@@ -32,14 +24,14 @@ export default Vue.extend({
   data() {
     return {
       orders: [],
-      order: {},
       errors: [],
-      ordersfields: [],
-      singleOrderFields: ["id", "createdDate"],
+      fields: [
+        { key: "id", label: "Order Id" },
+        { key: "href", label: "Link" }
+      ],
       isOpen: false
     };
   },
-
   // Fetches orders when the component is created.
   async created() {
     try {
@@ -51,21 +43,11 @@ export default Vue.extend({
       this.errors.push(e);
     }
   },
-
   methods: {
-    async onChildClick(orderId) {
+    onChildClick(orderId) {
+      console.log(orderId);
       this.isOpen = true;
-      this.$router.push({ path: `/orders/${orderId}` });
-      this.order.id = orderId;
-
-      try {
-        const response = await axios.get(
-          `http://zss-stage-web01.tss-dmz.com:91/netsuiteservice/api/WebOrders/${orderId}`
-        );
-        this.order = response.data;
-      } catch (e) {
-        this.errors.push(e);
-      }
+      this.$router.push({ name: `SingleOrder`, params: { id: orderId } });
     }
   }
 });
