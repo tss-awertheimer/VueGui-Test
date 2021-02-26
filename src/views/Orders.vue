@@ -45,7 +45,6 @@ export default Vue.extend({
   },
   methods: {
     onChildClick(orderId) {
-      console.log(orderId);
       this.isOpen = true;
       this.$router.push({ name: `SingleOrder`, params: { id: orderId } });
     }

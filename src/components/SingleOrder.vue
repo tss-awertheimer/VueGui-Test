@@ -16,7 +16,10 @@
         </div>
       </div>
     </div>
-    <b-button class="d-flex justify-content-end">Back</b-button>
+
+    <b-button class="d-flex justify-content-end" @click="$router.go(-1)"
+      >Back</b-button
+    >
   </div>
 </template>
 
