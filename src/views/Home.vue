@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>Welcome to Vuey Gui</h1>
+    <p>Working Title</p>
   </div>
 </template>
 
