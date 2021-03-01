@@ -30,8 +30,10 @@ img {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: #2a4b8e;
   padding: 1rem;
+  margin-bottom: 20px;
 
   .logo {
     width: 200px;
@@ -39,8 +41,6 @@ header {
   }
 
   #nav {
-    padding: 30px;
-
     a {
       font-weight: bold;
       color: #fff;
